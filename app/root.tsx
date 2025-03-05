@@ -6,6 +6,9 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { SWRConfig } from 'swr'
+
+import {fetcher} from "@/hooks/useFetch";
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -29,7 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
+        {/* <Meta /> */}
         <Links />
       </head>
       <body>
@@ -42,7 +45,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <SWRConfig
+      value={{
+        dedupingInterval: 100,
+        refreshInterval: 100,
+        fallback: { a: 1, b: 1 },
+        fetcher
+      }}
+    >
+      <Outlet />
+    </SWRConfig>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
