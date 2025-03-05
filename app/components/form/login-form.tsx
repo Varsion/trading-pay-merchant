@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label"
 
 const formSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8),
+  password: z.string().min(8)
 })
 
 export function LoginForm() {
@@ -35,7 +35,6 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
-
           <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6">
             <div className="grid gap-2">
               <FormField
@@ -68,7 +67,7 @@ export function LoginForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input {...field} />
+                      <Input type='password' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

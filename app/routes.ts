@@ -9,7 +9,7 @@ import {
 export default [
   index("routes/home.tsx"),
 
-  layout("./pages/auth/layout.tsx", [
+  layout("./pages/layouts/auth_layout.tsx", [
     route("auth/login", "./pages/auth/login.tsx"),
     // route("auth/register", "./pages/auth/register.tsx"),
   ]),
