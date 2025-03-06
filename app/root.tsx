@@ -8,6 +8,8 @@ import {
 } from "react-router";
 import { SWRConfig } from 'swr'
 
+import { Toaster } from "@/components/ui/sonner"
+
 import {fetcher} from "@/hooks/useFetch";
 
 import type { Route } from "./+types/root";
@@ -55,6 +57,7 @@ export default function App() {
       }}
     >
       <Outlet />
+      <Toaster />
     </SWRConfig>
   );
 }

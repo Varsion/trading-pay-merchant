@@ -12,7 +12,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Label } from "@/components/ui/label"
+import { toast } from "sonner"
 
+import { create as Login } from '@/apis/actions/auth.action';
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -20,8 +22,16 @@ const formSchema = z.object({
 })
 
 export function LoginForm() {
-
+  const handleLogin = async (data: z.infer<typeof formSchema>) => {
+    try {
+      const response = await Login(data);
+      return response;
+    } catch (error: any) {
+      toast.error(error.errorMessage);
+    }
+  }
   const form = useForm<z.infer<typeof formSchema>>({
+    mode: "onBlur",
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
@@ -30,7 +40,7 @@ export function LoginForm() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    handleLogin(values);
   }
 
   return (

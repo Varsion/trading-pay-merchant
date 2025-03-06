@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { ErrorResponse } from '@/types/errors';
 
 const actionInstance = axios.create({
   baseURL: import.meta.env.VITE_API_HOST,
@@ -30,10 +31,15 @@ actionInstance.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    console.error('Axios Error:', error);
-    return Promise.reject(error);
+    if (import.meta.env.DEV) {
+      console.error('Axios Error:', error);
+    }
+    return Promise.reject({
+      message: error.response?.data.errors || error.message || 'An error occurred',
+      status: error.response?.status || 500,
+      statusText: error.response?.statusText || 'Internal Server Error',
+    } as ErrorResponse);
   }
 );
-
 
 export default actionInstance;
