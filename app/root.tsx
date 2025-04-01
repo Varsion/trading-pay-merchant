@@ -9,7 +9,7 @@ import {
 import { SWRConfig } from 'swr'
 
 import { Toaster } from "@/components/ui/sonner"
-
+import { AuthProvider } from './contexts/AuthContext';
 import {fetcher} from "@/hooks/useFetch";
 
 import type { Route } from "./+types/root";
@@ -56,8 +56,10 @@ export default function App() {
         fetcher
       }}
     >
-      <Outlet />
-      <Toaster />
+      <AuthProvider>
+        <Outlet />
+        <Toaster />
+      </AuthProvider>
     </SWRConfig>
   );
 }
